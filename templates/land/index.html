@@ -1,0 +1,325 @@
+{% load staticfiles %}
+{% load filename %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Landing Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+		<link href="{% static 'css/bootstrap-theme.min.css' %}" rel="stylesheet">
+		<link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+		<div class="container">
+			<div class="col-sm-2">
+				<img id="logo" class="col-sm-12" src="{% static 'image/logo.png' %}">
+			</div>
+			<div id="main_head" class="col-sm-10">
+				<h1>	Help	us	Create	A	Fantas+c	Rental	Living	Experience	in <br>
+						Mexico	City	</h1>
+			</div>
+
+			<div id="menu_title"  class="col-sm-12">
+				<div id="menu_content" class="clearfix col-sm-12">
+					<div class="col-sm-6"></div>
+					<div class="col-sm-6">
+						<div class="col-sm-5 nav_button">
+							<input id="" type="button" class="col-md-12 btn btn-default" value="For Property Brokers">
+						</div>
+						<div class="col-sm-5 nav_button">
+							<input id="" type="button" class="col-md-12 btn btn-default" value="For Developers">
+						</div>
+						<div class="col-sm-2 nav_button">
+							<input id="" type="button" class="col-md-12 btn btn-default" value="Blog">
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="search_panel" class="clearfix col-sm-12">
+				<div class="col-sm-10 col-sm-offset-1">
+					<h2 id="panel_label">Look	at	our	apartments</h2>
+				</div>
+				<div id="search_detail" class="col-sm-8 col-sm-offset-2">
+					<div class="col-sm-6">
+						<input type="text" class="form form-control" placeholder="Where?"><br>
+					</div>
+					<div class="col-sm-4">
+						<input type="text" class="form form-control" placeholder="Price range?"><br>
+					</div>
+					<div class="col-sm-2">
+						<input type="button" class="btn btn-primary" value="GO"><br>
+					</div>
+				</div>
+			</div>
+
+			<div id="list_panel" class="clearfix col-sm-12">
+				<div id="heading_list" class="col-sm-3">
+					<h2>Apartment	Listings</h2>
+				</div>
+                <div id="prev_next" class="col-sm-9">
+                    <ul class="pager" style="float:left;">
+                        <li id="prev_btn_apart"><a href="javascript:void(0)">Previous</a></li>
+                        <li id="next_btn_apart"><a href="javascript:void(0)">Next</a></li>
+                    </ul>
+                </div>
+                {% for apartment in apartments %}
+				<div id="list_apartment{{ apartment.tag_line }}" class="list_apartment col-sm-12">
+					<div id="left_side" class="col-sm-4">
+						<div id="label_div">
+							<label id="label_apart"><em>{{ apartment.tag_line }}</em></label><br>
+							<p id="label_price">$ {{ apartment.rent_price }}</p><br>
+							<p>
+								Departamento en renta<br>
+								Avenida {{ apartment.tag_line }} 1 - {{ apartment.tag_line }} Chapultepec<br>
+								{{ apartment.land_area }} m<sup>2</sup> | recamaras
+							</p>
+						</div>
+
+                        <div id="filter_div" class="col-sm-12">
+                            <h2>filter</h2><br>
+                            <form method="post" action="">{% csrf_token %}
+                                <label class="form">Rental Price</label>
+                                <select name="rent_price" class="form form-control">
+                                    <option id="30000">$ 30000</option>
+                                    <option id="45000">$ 45000</option>
+                                    <option id="67000">$ 67000</option>
+                                </select><br>
+                                <label class="form">Bedrooms</label>
+                                <select name="bedroom" class="form form-control">
+                                    <option id="1">1</option>
+                                    <option id="2">2</option>
+                                    <option id="3">3</option>
+                                    <option id="4">4</option>
+                                    <option id="5">5</option>
+                                    <option id="6">6</option>
+                                </select><br>
+                                <label class="form">Bathrooms</label>
+                                <select name="bathroom" class="form form-control">
+                                    <option id="1">1</option>
+                                    <option id="2">2</option>
+                                    <option id="3">3</option>
+                                    <option id="4">4</option>
+                                    <option id="5">5</option>
+                                    <option id="6">6</option>
+                                </select><br>
+                                <input style="float:right;" type="submit" name="btn_filter" class="btn btn-primary" value="Filter">
+                            </form>
+                        </div>
+					</div>
+
+					<div id="content_side" class="col-sm-5">
+                        {% for image in apartment.image_as_list %}
+						<img id="{{ apartment.tag_line }}{{ image|get_image_name }}" src="{% static 'apartment_image/' %}{{ image }}" class="image_apart col-sm-12">
+                        {% endfor %}
+                        <div id="prev_button{{ apartment.tag_line }}" class="prev_button">
+                            <a href="javascript:void(0)" style="float: left;"><img src="{% static 'image/prev_btn.png' %}"></a>
+                        </div>
+                        <div id="next_button{{ apartment.tag_line }}" class="next_button">
+                            <a href="javascript:void(0)" style="float: right;"><img src="{% static 'image/next_btn.png' %}"></a>
+                        </div>
+					</div>
+					<div id="right_side" class="col-sm-3">
+						<label> Benefit for tenants</label><br><br>
+                        <ul>
+                            <li>Designed	for	modern	living	</li>
+                            <li>Prime	locatons</li>
+                            <li> Easy	to	move	and	live	in</li>
+                            <li> Services<br><br></li>
+                            <label>What is renting process like? Learn more > </label>
+                            <li>   ... </li>
+                        </ul>
+					</div>
+				</div>
+                {% endfor %}
+			</div>
+
+
+      <div id="footer_panel" class="clearfix col-sm-12">
+        <div id="left_foot" class="col-sm-6">
+          <div id="black_panel" class="col-sm-12">
+            <h2 id="panel_label">We	want	to	hear	from	you	if	:	</h2>
+            <div id="condition_panel" class="col-sm-10 col-sm-offset-1">
+              <div id="condition_detail" class="col-sm-12 text-center">
+                <div class="col-sm-2"><input type="checkbox" id="panel_label" class="form" style="folat:right;"></div>
+                <div class="col-sm-10"><label id="panel_label">	The	place	your	living	in	is	driving	you	crazy?	</label></div>
+              </div>
+              <div id="condition_detail" class="col-sm-12 text-center">
+                <div class="col-sm-2"><input type="checkbox" id="panel_label" class="form"></div>
+                <div class="col-sm-10"><label id="panel_label">The	area	you	are	living	is	driving	you	crazy?</label></div>
+              </div>
+              <div id="condition_detail" class="col-sm-12 text-center">
+                <div class="col-sm-2"><input type="checkbox" id="panel_label" class="form"></div>
+                <div class="col-sm-10"><label id="panel_label">Finding	a	place	to	live	is	driving	you	crazy?</label></div>
+              </div>
+              <div id="condition_detail" class="col-sm-12 text-center">
+                <div class="col-sm-2"><input type="checkbox" id="panel_label" class="form"></div>
+                <div class="col-sm-10"><label id="panel_label">		The	process	of	geGng	a	place	to	live	is	driving	you	crazy?	</label></div>
+              </div>
+            </div>
+          </div>
+          <div id="blue_panel" class="col-sm-12">
+            <h2>Contact Us</h2>
+            <div class="col-sm-6">
+              <label>( Name<input type="text" id="border_text">)</label>
+              <label>Phone: <input type="text" id="border_text"></label>
+              <label>Email: <input type="text" id="border_text"></label>
+            </div>
+            <div class="col-sm-6">
+              <div class="col-sm-3" style="padding:2px;"><img style="padding:0px;" class="col-sm-12" src="{% static 'image/fb.png' %}"></div>
+              <div class="col-sm-6" style="padding:2px;"><img style="padding:0px;" class="col-sm-12" src="{% static 'image/youtube.png' %}"></div>
+              <div class="col-sm-3" style="padding:2px;"><img style="padding:0px;" class="col-sm-12" src="{% static 'image/twitter.png' %}"></div>
+            </div>
+          </div>
+        </div>
+        <div id="right_foot" class="col-sm-6">
+          <div id="blue_panel" class="col-sm-12">
+            <h2>Your	Information</h2>
+          </div>
+          <div id="form_panel" class="form col-sm-12">
+            <div class="form-group col-sm-12">
+              <div id="form_label" class="col-sm-5"><label for="name" class="">Full	Name:	</label></div>
+              <div class="col-sm-7"><input type="text" id="name" class="form form-control"></div>
+            </div>
+            <div class="form-group col-sm-12">
+              <div id="form_label" class="col-sm-5"><label for="name" class="">Email Address:	</label></div>
+              <div class="col-sm-7"><input type="text" id="email" class="form form-control"></div>
+            </div>
+            <div class="form-group col-sm-12">
+              <div id="form_label" class="col-sm-5"><label for="name" class="">Daytime Phone#:	</label></div>
+              <div class="col-sm-7"><input type="text" id="name" class="form form-control"></div>
+            </div>
+            <div class="form-group col-sm-12">
+              <div id="form_label" class="col-sm-5"><label for="name" class="">#Bedrooms:	</label></div>
+              <div class="col-sm-7"><input type="text" id="name" class="form form-control"></div>
+            </div>
+            <div class="form-group col-sm-12">
+              <div id="form_label" class="col-sm-5"><label for="name" class="">Price Range(monthly):	</label></div>
+              <div class="col-sm-7"><input type="text" id="name" class="form form-control"></div>
+            </div>
+            <div class="form-group col-sm-12">
+              <div id="form_label" class="col-sm-5"><label for="name" class="">Area:	</label></div>
+              <div class="col-sm-7"><input type="text" id="name" class="form form-control"></div>
+            </div>
+            <div id="subscribe_panel" class="col-sm-12">
+              <div class="col-sm-6"></div>
+              <div class="col-sm-6 text-center">
+                <button class="btn btn-primary">Subscribe	to	our<br>	mailing	list	</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="footer-panel_last" class="clearfix col-sm-12">
+        <div class="col-sm-8 col-sm-offset-2 text-center">
+          <p id="panel_label">
+            Fiso	Hoga r	is	an	ins2tu2onal	investment	manager	of	residen2al	real	estate	property		which	aims	to	provide	the	highest	quality	of	residen2al	rental	experience	to	its	tenants	and	stable	transparent	income	to	its	investors	throughout		the	Republic	of	Mexico.
+          </p>
+        </div>
+      </div>
+
+		</div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery-1.10.0.js"></script>
+    <script type="text/JavaScript">
+        $(document).ready(function(){
+
+
+            {% for apartment in apartments %}
+
+                $("#list_apartment{{ apartment.tag_line }}").css("display", "none");
+
+                {% for image in apartment.image_as_list %}
+
+                    $("#{{ apartment.tag_line }}{{ image|get_image_name }}").css("display", "none");
+                {% endfor %}
+                {% with apartment.image_as_list|first as image_first %}
+                    $("#{{ apartment.tag_line }}{{ image_first|get_image_name }}").css("display", "block");
+                {% endwith %}
+
+                {% with apartment.image_as_list as images %}
+                    var image_num_str{{ apartment.tag_line }} = {{ images|get_number }};
+                {% endwith %}
+
+                var flag_image{{ apartment.tag_line }} = 0;
+                image_num{{ apartment.tag_line }} = parseInt(image_num_str{{ apartment.tag_line }});
+                //alert(image_num_str);
+                $("#prev_button{{ apartment.tag_line }}").click(function(){
+                    if(flag_image{{ apartment.tag_line }} != 0)
+                    {
+                        var first = $(this).siblings('img:first');
+                        var final = $(this).siblings('img:first');
+                        var temp = $(this).siblings('img:first');
+
+                        for(var i=0;i<flag_image{{ apartment.tag_line }};i++)
+                        {
+                            final = first.next();
+                            temp = first.next();
+                            first = temp;
+                        }
+                        final.css("display", "none");
+                        final.prev().css("display","block");
+                        flag_image{{ apartment.tag_line }}--;
+                    }
+
+                });
+
+                $("#next_button{{ apartment.tag_line }}").click(function(){
+                    if(flag_image{{ apartment.tag_line }} < image_num{{ apartment.tag_line }} - 1)
+                    {
+                        var first = $(this).siblings('img:first');
+                        var final = $(this).siblings('img:first');
+                        var temp = $(this).siblings('img:first');
+                        console.log(first);
+                        console.log(flag_image{{ apartment.tag_line }});
+                        if(flag_image{{ apartment.tag_line }} != 0)
+                        {
+                            for(var i=0;i<flag_image{{ apartment.tag_line }};i++)
+                            {
+                                final = first.next();
+                                console.log(final);
+                                temp = first.next();
+                                first = temp;
+                            }
+                        }
+                        else {
+                            final = first;
+                            console.log(final);
+                        }
+                        final.css("display", "none");
+                        final.next().css("display","block");
+                        flag_image{{ apartment.tag_line }}++;
+                    }
+                });
+
+
+
+            {% endfor %}
+
+            {% with apartments.all|first as apart_first %}
+                $("#list_apartment{{ apart_first.tag_line }}").css("display", "block");
+            {% endwith %}
+
+            {% with apartments.count as number %}
+                var apart_num_str = {{ number }};
+            {% endwith %}
+
+            var apart_num = parseInt(apart_num_str);
+
+
+        });
+    </script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+  </body>
+</html>

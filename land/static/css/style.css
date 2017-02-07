@@ -1,0 +1,122 @@
+#main_head {
+  padding-top: 15px;
+}
+#logo {
+  max-width: 260px;
+}
+#menu_title {
+  margin-top:5px;
+  background-color: #3ab2fd;
+  padding-top: 5px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+#menu_content {
+  background-color: #c8d2d9;
+  padding: 5px;
+}
+.nav_button {
+  padding-bottom: 5px;
+}
+#search_panel {
+  margin-top:10px;
+  padding-bottom: 20px;
+  background-color: #4385c2;
+  box-shadow: 5px 5px 5px grey;
+}
+#panel_label {
+  color: white;
+}
+#search_detail {
+  padding-top: 10px;
+}
+#left_side {
+  padding-right: 10px;
+}
+#right_side {
+  padding-left: 10px;
+}
+#content_side {
+  padding: 0px;
+}
+#list_panel {
+  margin-top: 10px;
+  padding: 0px;
+  padding-bottom: 20px;
+  box-shadow: 5px 5px 5px grey;
+}
+.list_apartment {
+  padding-top: 20px;
+}
+#label_apart {
+  font-size: 30px;
+}
+#label_price {
+  font-size: 40px;
+}
+#label_div {
+  padding-bottom: 10px;
+}
+.image_apart {
+  width: 100%;
+  min-width: 260px;
+}
+#footer_panel {
+  margin-top: 10px;
+  padding: 0px;
+}
+#left_foot {
+  padding: 0px;
+}
+#right_foot {
+  padding: 0px;
+}
+#black_panel {
+  background-color: #000000;
+}
+#condition_panel {
+  padding: 20px;
+}
+#condition_detail {
+  padding: 10px;
+  border-bottom-style: dashed;
+  border-bottom: 1px dashed #3ab2fd;
+}
+#blue_panel {
+  background-color: #3ab2fd;
+  padding-bottom: 30px;
+}
+#border_text {
+  border: none;
+  background-color: #3ab2fd;
+  border-bottom: 1px solid #000000;
+}
+#form_panel {
+  padding-top: 40px;
+}
+#form_label {
+  padding-top: 5px;
+}
+#subscribe_panel {
+  padding-top: 10px;
+}
+#footer-panel_last {
+  background-color: #000000;
+  padding: 20px;
+}
+.prev_button {
+    position: inherit;
+    top: -100px;
+    right: -10px;
+}
+.next_button {
+    position: inherit;
+    top: -100px;
+    left: -10px;
+}
+#filter_div {
+    padding: 0px;
+}
+#prev_next {
+    padding-top: 5px;
+}
