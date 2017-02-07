@@ -89,9 +89,9 @@
                             <form method="post" action="">{% csrf_token %}
                                 <label class="form">Rental Price</label>
                                 <select name="rent_price" class="form form-control">
-                                    <option id="30000">$ 30000</option>
-                                    <option id="45000">$ 45000</option>
-                                    <option id="67000">$ 67000</option>
+                                    <option id="30000">30000</option>
+                                    <option id="45000">45000</option>
+                                    <option id="67000">67000</option>
                                 </select><br>
                                 <label class="form">Bedrooms</label>
                                 <select name="bedroom" class="form form-control">
@@ -270,6 +270,9 @@
                         final.prev().css("display","block");
                         flag_image{{ apartment.tag_line }}--;
                     }
+                    else {
+                        alert("This is the first photo.");
+                    }
 
                 });
 
@@ -299,6 +302,9 @@
                         final.next().css("display","block");
                         flag_image{{ apartment.tag_line }}++;
                     }
+                    else {
+                        alert("This is the last photo.");
+                    }
                 });
 
 
@@ -314,7 +320,59 @@
             {% endwith %}
 
             var apart_num = parseInt(apart_num_str);
+            var flag_apart = 0;
 
+            $("#prev_btn_apart").click(function(){
+                if(flag_apart != 0)
+                {
+                    var first = $(this).parent().parent().next();
+                    var final = $(this).parent().parent().next();
+                    var temp = $(this).parent().parent().next();
+
+                    for(var i=0;i<flag_apart;i++)
+                    {
+                        final = first.next();
+                        temp = first.next();
+                        first = temp;
+                    }
+                    final.css("display", "none");
+                    final.prev().css("display","block");
+                    flag_apart--;
+                }
+                else {
+                    alert("This is the first apartment.");
+                }
+
+            });
+
+            $("#next_btn_apart").click(function(){
+                if(flag_apart < apart_num - 1)
+                {
+                    var first = $(this).parent().parent().next();
+                    var final = $(this).parent().parent().next();
+                    var temp = $(this).parent().parent().next();
+                    if(flag_apart != 0)
+                    {
+                        for(var i=0;i<flag_apart;i++)
+                        {
+                            final = first.next();
+                            console.log(final);
+                            temp = first.next();
+                            first = temp;
+                        }
+                    }
+                    else {
+                        final = first;
+                        console.log(final);
+                    }
+                    final.css("display", "none");
+                    final.next().css("display","block");
+                    flag_apart++;
+                }
+                else {
+                    alert("This is the last apartment.");
+                }
+            });
 
         });
     </script>
