@@ -29,3 +29,21 @@ class Apartment(models.Model):
 
     def image_as_list(self):
         return self.image_url.split(', ')
+
+class Guest(models.Model):
+    place = models.BooleanField(default=False)
+    area = models.BooleanField(default=False)
+    finding_place = models.BooleanField(default=False)
+    process = models.BooleanField(default=False)
+    full_name = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    daytime_phone = models.CharField(max_length=100)
+    bedroom = models.DecimalField(decimal_places=0,max_digits=2)
+    price = models.DecimalField(decimal_places=0,max_digits=10)
+    location_area = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ['-full_name']
+
+    def __unicode__(self):
+       return self.full_name

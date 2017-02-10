@@ -20,7 +20,9 @@
   <body>
 		<div class="container">
 			<div class="col-sm-2">
-				<img id="logo" class="col-sm-12" src="{% static 'image/logo.png' %}">
+                <a href="{% url 'index' %}">
+				    <img id="logo" class="col-sm-12" src="{% static 'image/logo.png' %}">
+                </a>
 			</div>
 			<div id="main_head" class="col-sm-10">
 				<h1>	Help	us	Create	A	Fantas+c	Rental	Living	Experience	in <br>
@@ -43,21 +45,29 @@
 					</div>
 				</div>
 			</div>
+            {% if message %}
+            <div class="panel panel-success col-sm-12 text-center" style="padding:10px; margin-top:10px;">
 
+                    <label class="text-success">{{ message }}</label>
+
+            </div>
+            {% endif %}
 			<div id="search_panel" class="clearfix col-sm-12">
 				<div class="col-sm-10 col-sm-offset-1">
 					<h2 id="panel_label">Look	at	our	apartments</h2>
 				</div>
 				<div id="search_detail" class="col-sm-8 col-sm-offset-2">
-					<div class="col-sm-6">
-						<input type="text" class="form form-control" placeholder="Where?"><br>
-					</div>
-					<div class="col-sm-4">
-						<input type="text" class="form form-control" placeholder="Price range?"><br>
-					</div>
-					<div class="col-sm-2">
-						<input type="button" class="btn btn-primary" value="GO"><br>
-					</div>
+                    <form method="post" action="">{% csrf_token %}
+    					<div class="col-sm-6">
+    						<input type="text" name="where" class="form form-control" placeholder="Where?"><br>
+    					</div>
+    					<div class="col-sm-4">
+    						<input type="text" name="price" class="form form-control" placeholder="Price range?"><br>
+    					</div>
+    					<div class="col-sm-2">
+    						<input type="submit" name="submit" class="btn btn-primary" value="GO"><br>
+    					</div>
+                    </form>
 				</div>
 			</div>
 
@@ -68,8 +78,10 @@
                 <div id="prev_next" class="col-sm-9">
                     <ul class="pager" style="float:left;">
                         <li id="prev_btn_apart"><a href="javascript:void(0)">Previous</a></li>
-                        <li id="next_btn_apart"><a href="javascript:void(0)">Next</a></li>
+                        <li id="next_btn_apart"><a href="javascript:void(0)">Next</a>&nbsp;&nbsp;&nbsp;</li>
+                        <a class="btn btn-default btn-sm" href="{% url 'index' %}">Clear Filters</a>
                     </ul>
+
                 </div>
                 {% for apartment in apartments %}
 				<div id="list_apartment{{ apartment.tag_line }}" class="list_apartment col-sm-12">
@@ -78,9 +90,9 @@
 							<label id="label_apart"><em>{{ apartment.tag_line }}</em></label><br>
 							<p id="label_price">$ {{ apartment.rent_price }}</p><br>
 							<p>
-								Departamento en renta<br>
-								Avenida {{ apartment.tag_line }} 1 - {{ apartment.tag_line }} Chapultepec<br>
-								{{ apartment.land_area }} m<sup>2</sup> | recamaras
+								{{ apartment.description }}<br><br>
+								{{ apartment.land_area }} m<sup>2</sup> | {{ apartment.living_room }}  recamaras<br><br>
+                                Location: {{ apartment.location }}
 							</p>
 						</div>
 
@@ -111,7 +123,7 @@
                                     <option id="5">5</option>
                                     <option id="6">6</option>
                                 </select><br>
-                                <input style="float:right;" type="submit" name="btn_filter" class="btn btn-primary" value="Filter">
+                                <input style="float:right;" type="submit" name="submit" class="btn btn-primary" value="Filter">
                             </form>
                         </div>
 					</div>
@@ -142,26 +154,26 @@
                 {% endfor %}
 			</div>
 
-
+    <form method="post" action="">{% csrf_token %}
       <div id="footer_panel" class="clearfix col-sm-12">
         <div id="left_foot" class="col-sm-6">
           <div id="black_panel" class="col-sm-12">
             <h2 id="panel_label">We	want	to	hear	from	you	if	:	</h2>
             <div id="condition_panel" class="col-sm-10 col-sm-offset-1">
               <div id="condition_detail" class="col-sm-12 text-center">
-                <div class="col-sm-2"><input type="checkbox" id="panel_label" class="form" style="folat:right;"></div>
+                <div class="col-sm-2"><input type="checkbox" name="place" value="true" id="panel_label" class="form" style="folat:right;"></div>
                 <div class="col-sm-10"><label id="panel_label">	The	place	your	living	in	is	driving	you	crazy?	</label></div>
               </div>
               <div id="condition_detail" class="col-sm-12 text-center">
-                <div class="col-sm-2"><input type="checkbox" id="panel_label" class="form"></div>
+                <div class="col-sm-2"><input type="checkbox" name="area" value="true" id="panel_label" class="form"></div>
                 <div class="col-sm-10"><label id="panel_label">The	area	you	are	living	is	driving	you	crazy?</label></div>
               </div>
               <div id="condition_detail" class="col-sm-12 text-center">
-                <div class="col-sm-2"><input type="checkbox" id="panel_label" class="form"></div>
+                <div class="col-sm-2"><input type="checkbox" name="finding_place" value="true" id="panel_label" class="form"></div>
                 <div class="col-sm-10"><label id="panel_label">Finding	a	place	to	live	is	driving	you	crazy?</label></div>
               </div>
               <div id="condition_detail" class="col-sm-12 text-center">
-                <div class="col-sm-2"><input type="checkbox" id="panel_label" class="form"></div>
+                <div class="col-sm-2"><input type="checkbox" name="process" value="true" id="panel_label" class="form"></div>
                 <div class="col-sm-10"><label id="panel_label">		The	process	of	geGng	a	place	to	live	is	driving	you	crazy?	</label></div>
               </div>
             </div>
@@ -169,9 +181,9 @@
           <div id="blue_panel" class="col-sm-12">
             <h2>Contact Us</h2>
             <div class="col-sm-6">
-              <label>( Name<input type="text" id="border_text">)</label>
-              <label>Phone: <input type="text" id="border_text"></label>
-              <label>Email: <input type="text" id="border_text"></label>
+              <label>( Name: <input name="" type="text" id="border_text" value="Harris Yong">)</label>
+              <label>Phone: <input name="" type="text" id="border_text" value="22222222"></label>
+              <label>Email: <input name="" type="text" id="border_text" value="harrisyong@outlook.com"></label>
             </div>
             <div class="col-sm-6">
               <div class="col-sm-3" style="padding:2px;"><img style="padding:0px;" class="col-sm-12" src="{% static 'image/fb.png' %}"></div>
@@ -187,38 +199,38 @@
           <div id="form_panel" class="form col-sm-12">
             <div class="form-group col-sm-12">
               <div id="form_label" class="col-sm-5"><label for="name" class="">Full	Name:	</label></div>
-              <div class="col-sm-7"><input type="text" id="name" class="form form-control"></div>
+              <div class="col-sm-7"><input type="text" name="full_name" id="name" class="form form-control"></div>
             </div>
             <div class="form-group col-sm-12">
               <div id="form_label" class="col-sm-5"><label for="name" class="">Email Address:	</label></div>
-              <div class="col-sm-7"><input type="text" id="email" class="form form-control"></div>
+              <div class="col-sm-7"><input type="text" name="email" id="email" class="form form-control"></div>
             </div>
             <div class="form-group col-sm-12">
               <div id="form_label" class="col-sm-5"><label for="name" class="">Daytime Phone#:	</label></div>
-              <div class="col-sm-7"><input type="text" id="name" class="form form-control"></div>
+              <div class="col-sm-7"><input type="text" name="daytime_phone" id="name" class="form form-control"></div>
             </div>
             <div class="form-group col-sm-12">
               <div id="form_label" class="col-sm-5"><label for="name" class="">#Bedrooms:	</label></div>
-              <div class="col-sm-7"><input type="text" id="name" class="form form-control"></div>
+              <div class="col-sm-7"><input type="number" name="bedroom" id="name" class="form form-control"></div>
             </div>
             <div class="form-group col-sm-12">
               <div id="form_label" class="col-sm-5"><label for="name" class="">Price Range(monthly):	</label></div>
-              <div class="col-sm-7"><input type="text" id="name" class="form form-control"></div>
+              <div class="col-sm-7"><input type="number" name="price" id="name" class="form form-control"></div>
             </div>
             <div class="form-group col-sm-12">
               <div id="form_label" class="col-sm-5"><label for="name" class="">Area:	</label></div>
-              <div class="col-sm-7"><input type="text" id="name" class="form form-control"></div>
+              <div class="col-sm-7"><input type="text" name="location_area" id="name" class="form form-control"></div>
             </div>
             <div id="subscribe_panel" class="col-sm-12">
               <div class="col-sm-6"></div>
               <div class="col-sm-6 text-center">
-                <button class="btn btn-primary">Subscribe	to	our<br>	mailing	list	</button>
+                <input type="submit" name="submit" class="btn btn-primary" value="Subscribe	to	our	mailing	list">
               </div>
             </div>
           </div>
         </div>
       </div>
-
+  </form>
       <div id="footer-panel_last" class="clearfix col-sm-12">
         <div class="col-sm-8 col-sm-offset-2 text-center">
           <p id="panel_label">
